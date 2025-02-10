@@ -34,12 +34,15 @@ def get_open_prs(owner, repo_name, github_token=None):
 def format_slack_message(pr_data):
     """
     Bouwt een bericht op met het overzicht van open pull requests per repository.
+    Hierbij worden PR's met titels die beginnen met "[Changelog CI]" eruit gefilterd.
     """
     message_lines = ["*Overzicht open pull requests*"]
     for repo_name, prs in pr_data.items():
-        if prs:
-            message_lines.append(f"\n*{repo_name}* ({len(prs)} open):")
-            for pr in prs:
+        # Filter PR's met titels die beginnen met "[Changelog CI]"
+        filtered_prs = [pr for pr in prs if not pr.get("title", "").startswith("[Changelog CI]")]
+        if filtered_prs:
+            message_lines.append(f"\n*{repo_name}* ({len(filtered_prs)} open):")
+            for pr in filtered_prs:
                 title = pr.get("title", "Geen titel")
                 pr_url = pr.get("html_url", "")
                 message_lines.append(f"- <{pr_url}|{title}>")
