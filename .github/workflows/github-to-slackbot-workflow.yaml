@@ -1,0 +1,32 @@
+name: Slackbot Workflow
+
+on:
+  schedule:
+    # Deze cron-trigger loopt elke vrijdag om 08:00 UTC.
+    # Dit komt overeen met vrijdag 09:00 CET (Amsterdam, wintertijd). Pas zonodig aan.
+    - cron: '0 8 * * FRI'
+  workflow_dispatch:
+
+jobs:
+  slackbot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run Slackbot
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python get-pr-data-to-slack.py
