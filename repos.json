@@ -1,0 +1,22 @@
+{
+    "repos": [
+      {
+        "name": "OpenCatalogi",
+        "url": "https://github.com/ConductionNL/opencatalogi"
+      },
+      {
+        "name": "Open Register",
+        "url": "https://github.com/ConductionNL/openregister"
+      },
+
+      {
+        "name": "Open Connector",
+        "url": "https://github.com/ConductionNL/openconnector"
+      },
+      {
+        "name": "Zaakafhandelapp",
+        "url": "https://github.com/ConductionNL/zaakafhandelapp"
+      }
+    ]
+  }
+  
